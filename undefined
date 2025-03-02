@@ -1,0 +1,9 @@
+import ResultsApp from "@/components/ResultsApp";
+
+export default function ResultsAppStoryboard() {
+  return (
+    <div className="bg-gray-50 w-full h-full overflow-auto">
+      <ResultsApp />
+    </div>
+  );
+}
