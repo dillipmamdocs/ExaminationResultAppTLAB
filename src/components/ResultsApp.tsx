@@ -147,28 +147,53 @@ export default function ResultsApp() {
                 <label className="text-sm font-medium text-gray-700">
                   Date of Birth
                 </label>
-                <Popover>
-                  <PopoverTrigger asChild>
-                    <Button
-                      variant="outline"
-                      className={cn(
-                        "w-full justify-start text-left font-normal rounded-lg border-gray-200 h-11",
-                        !dob && "text-muted-foreground",
-                      )}
-                    >
-                      <CalendarIcon className="mr-2 h-4 w-4" />
-                      {dob ? format(dob, "PPP") : <span>Pick a date</span>}
-                    </Button>
-                  </PopoverTrigger>
-                  <PopoverContent className="w-auto p-0" align="start">
-                    <Calendar
-                      mode="single"
-                      selected={dob}
-                      onSelect={setDob}
-                      initialFocus
-                    />
-                  </PopoverContent>
-                </Popover>
+                <div className="grid grid-cols-3 gap-2">
+                  <Input
+                    type="number"
+                    placeholder="DD"
+                    min="1"
+                    max="31"
+                    className="rounded-lg border-gray-200 h-11"
+                    value={dob ? new Date(dob).getDate() : ""}
+                    onChange={(e) => {
+                      const day = parseInt(e.target.value);
+                      if (isNaN(day) || day < 1 || day > 31) return;
+                      const newDate = dob ? new Date(dob) : new Date();
+                      newDate.setDate(day);
+                      setDob(newDate);
+                    }}
+                  />
+                  <Input
+                    type="number"
+                    placeholder="MM"
+                    min="1"
+                    max="12"
+                    className="rounded-lg border-gray-200 h-11"
+                    value={dob ? new Date(dob).getMonth() + 1 : ""}
+                    onChange={(e) => {
+                      const month = parseInt(e.target.value);
+                      if (isNaN(month) || month < 1 || month > 12) return;
+                      const newDate = dob ? new Date(dob) : new Date();
+                      newDate.setMonth(month - 1);
+                      setDob(newDate);
+                    }}
+                  />
+                  <Input
+                    type="number"
+                    placeholder="YYYY"
+                    min="1900"
+                    max="2100"
+                    className="rounded-lg border-gray-200 h-11"
+                    value={dob ? new Date(dob).getFullYear() : ""}
+                    onChange={(e) => {
+                      const year = parseInt(e.target.value);
+                      if (isNaN(year) || year < 1900 || year > 2100) return;
+                      const newDate = dob ? new Date(dob) : new Date();
+                      newDate.setFullYear(year);
+                      setDob(newDate);
+                    }}
+                  />
+                </div>
               </div>
 
               {error && (
